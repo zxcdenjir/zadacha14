@@ -98,7 +98,7 @@
                     j2 = nj;
                 }
             }
-            
+
             for (int i = 0; i < half; i++)
             {
                 for (int j = 0; j < half; j++)
@@ -141,28 +141,30 @@
 
     static void PrintMatrix(int[,] array)
     {
-        int maxNumberLength = 0;
-        for (int i = 0; i < array.GetLength(0); i++)
+        int[] column_widths = new int[array.GetLength(1)];
+
+        for (int j = 0; j < array.GetLength(1); j++)
         {
-            for (int j = 0; j < array.GetLength(1); j++)
+            for (int i = 0; i < array.GetLength(0); i++)
             {
-                int len = array[i, j].ToString().Length;
-                if (len > maxNumberLength)
-                    maxNumberLength = len;
+                int width = array[i, j].ToString().Length;
+                if (width > column_widths[j])
+                    column_widths[j] = width;
             }
         }
 
-        int width = maxNumberLength + 1;
         for (int i = 0; i < array.GetLength(0); i++)
         {
             //int sum = 0;
             for (int j = 0; j < array.GetLength(1); j++)
             {
                 //sum += array[i, j];
-                if (j == 0) Console.Write("|");
-                Console.Write("{0," + width + "} ", array[i, j]);
+                if (j == 0)
+                    Console.Write("│");
+                Console.Write("{0," + (column_widths[j] + 1) + "} ", array[i, j]);
             }
-            Console.WriteLine("| ");
+            Console.WriteLine("│ ");
+            //Console.WriteLine("│ " + sum);
         }
     }
 }
